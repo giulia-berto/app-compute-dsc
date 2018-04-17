@@ -1,0 +1,62 @@
+#!/bin/bash
+#PBS -k o
+#PBS -l nodes=1:ppn=4,walltime=5:00:00
+
+## modules
+echo "Loading modules"
+module unload matlab
+module load matlab/2017a
+module load spm/8
+module unload python
+module load dipy/dev
+echo "Finished loading modules"
+
+export PYTHONPATH=/N/u/brlife/git/nibabel:$PYTHONPATH
+
+# Check the inputs subject id
+echo "Check the inputs subject id"
+afq_sub1_id=`jq -r '._inputs[0].meta.subject' config.json`
+t1_sub1_id=`jq -r '._inputs[1].meta.subject' config.json`
+afq_sub2_id=`jq -r '._inputs[2].meta.subject' config.json`
+t1_sub2_id=`jq -r '._inputs[3].meta.subject' config.json`
+if [ $afq_sub1_id == $t1_sub1_id -a $afq_sub2_id == $t1_sub2_id ]; then
+	echo "Inputs subject IDs correctly inserted"
+else
+	echo "Inputs subject IDs incorrectly inserted. Check them again."
+	exit 1
+fi
+
+# AFQ conversion
+echo "AFQ conversion to trk"
+matlab -nosplash -nodisplay -r "afqConverter()";
+
+ret=$?
+if [ ! $ret -eq 0 ]; then
+	echo "AFQ conversion failed"
+	echo $ret > finished
+	exit $ret
+fi
+
+# Run compute DSC
+echo "Computing DSC"
+
+while read tract_name; do         
+
+    echo "Tract name: $tract_name"; 
+
+    tract_sub1='sub1_'$tract_name'_tract.trk' 
+    tract_sub2='sub2_'$tract_name'_tract.trk'
+    DSC_txt_filename='DSC'_${afq_sub1_id}'-'${afq_sub2_id}
+    python compute_dsc4hcp.py -sub1 $tract_sub1 -sub2 $tract_sub2;
+    echo $DSC >> $DSC_txt_filename
+
+done < tract_name_list.txt
+
+ret=$?
+if [ ! $ret -eq 0 ]; then
+	echo "DSC computation failed"
+	echo $ret > finished
+	exit $ret
+fi
+
+echo "Complete"
