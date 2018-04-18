@@ -42,7 +42,6 @@ if (config.tract1 > 0)
         if (tract > 0)
             tract_name=strrep(fg_classified(tract).name,' ','_');
             write_fg_to_trk(fg_classified(tract),ref_src_sub1,sprintf('sub2_%s_tract.trk',tract_name));
-            fprintf(fid, [tract_name, '\n']);
         end    
     end
 else

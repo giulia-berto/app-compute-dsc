@@ -1,6 +1,10 @@
 """Compute DSC"""
 
 from __future__ import print_function
+import os
+import sys
+import argparse
+import os.path
 import nibabel as nib
 import numpy as np
 import dipy
@@ -40,6 +44,7 @@ if __name__ == '__main__':
 	tract_sub2 = tract_sub2.streamlines
 
 	DSC, TP, vol_A, vol_B = compute_dsc4hcp(tract_sub1, tract_sub2)
+	print("The DSC value between %s and %s is %s" %(args.sub1, args.sub2, DSC))
 
 	#Write DSC on a file
 	DSC_results = 'DSC_sub1-sub2.txt'

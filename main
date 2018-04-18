@@ -46,9 +46,7 @@ while read tract_name; do
 
     tract_sub1='sub1_'$tract_name'_tract.trk' 
     tract_sub2='sub2_'$tract_name'_tract.trk'
-    DSC_txt_filename='DSC'_${afq_sub1_id}'-'${afq_sub2_id}
     python compute_dsc4hcp.py -sub1 $tract_sub1 -sub2 $tract_sub2;
-    echo $DSC >> $DSC_txt_filename
 
 done < tract_name_list.txt
 
