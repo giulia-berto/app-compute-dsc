@@ -34,12 +34,17 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 
 	#Loading tracts
-	...
+	tract_sub1 = nib.streamlines.load(args.sub1)
+	tract_sub1 = tract_sub1.streamlines
+	tract_sub2 = nib.streamlines.load(args.sub2)
+	tract_sub2 = tract_sub2.streamlines
 
-	DSC, TP, vol_A, vol_B = compute_dsc4hcp(args.sub1, args.sub2)
+	DSC, TP, vol_A, vol_B = compute_dsc4hcp(tract_sub1, tract_sub2)
 
 	#Write DSC on a file
-	...
+	DSC_results = 'DSC_sub1-sub2.txt'
+	with open(DSC_results, "a") as myfile:
+            myfile.write("%s\n" %DSC)
 
 	sys.exit()    
 
