@@ -41,7 +41,7 @@ if (config.tract1 > 0)
     for tract = [config.tract1, config.tract2, config.tract3, config.tract4]
         if (tract > 0)
             tract_name=strrep(fg_classified(tract).name,' ','_');
-            write_fg_to_trk(fg_classified(tract),ref_src_sub1,sprintf('sub2_%s_tract.trk',tract_name));
+            write_fg_to_trk(fg_classified(tract),ref_src_sub2,sprintf('sub2_%s_tract.trk',tract_name));
         end    
     end
 else
