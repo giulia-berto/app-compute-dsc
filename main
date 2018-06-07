@@ -2,6 +2,8 @@
 #PBS -k o
 #PBS -l nodes=1:ppn=4,walltime=5:00:00
 
+[ $PBS_O_WORKDIR ] && cd $PBS_O_WORKDIR
+
 ## modules
 echo "Loading modules"
 module unload matlab
@@ -9,16 +11,17 @@ module load matlab/2017a
 module load spm/8
 module unload python
 module load dipy/dev
+module load nodejs
 echo "Finished loading modules"
 
 export PYTHONPATH=/N/u/brlife/git/nibabel:$PYTHONPATH
 
-# Check the inputs subject id
 echo "Check the inputs subject id"
 afq_sub1_id=`jq -r '._inputs[0].meta.subject' config.json`
 t1_sub1_id=`jq -r '._inputs[1].meta.subject' config.json`
 afq_sub2_id=`jq -r '._inputs[2].meta.subject' config.json`
 t1_sub2_id=`jq -r '._inputs[3].meta.subject' config.json`
+run=`jq -r '.run' config.json`
 if [ $afq_sub1_id == $t1_sub1_id -a $afq_sub2_id == $t1_sub2_id ]; then
 	echo "Inputs subject IDs correctly inserted"
 else
@@ -26,9 +29,8 @@ else
 	exit 1
 fi
 
-# AFQ conversion
 echo "AFQ conversion to trk"
-matlab -nosplash -nodisplay -r "afqConverter()";
+matlab -nosplash -nodisplay -r "afqConverter2()";
 
 ret=$?
 if [ ! $ret -eq 0 ]; then
@@ -37,18 +39,8 @@ if [ ! $ret -eq 0 ]; then
 	exit $ret
 fi
 
-# Run compute DSC
-echo "Computing DSC"
-
-while read tract_name; do         
-
-    echo "Tract name: $tract_name"; 
-
-    tract_sub1='sub1_'$tract_name'_tract.trk' 
-    tract_sub2='sub2_'$tract_name'_tract.trk'
-    python compute_dsc4hcp.py -sub1 $tract_sub1 -sub2 $tract_sub2;
-
-done < tract_name_list.txt
+echo "Computing voxel measures"
+python compute_dsc4hcp.py -sub $afq_sub1_id -list 'tract_name_list.txt' -run $run;
 
 ret=$?
 if [ ! $ret -eq 0 ]; then
