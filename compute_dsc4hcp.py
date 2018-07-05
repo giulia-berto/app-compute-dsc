@@ -105,7 +105,9 @@ if __name__ == '__main__':
 		true_tract_filename = '%s_tract.trk' %(tract_name)
 		true_tract = nib.streamlines.load(true_tract_filename)
 		affine = true_tract.affine
+		print(affine)
 		true_tract = true_tract.streamlines
+		print("Resampling with step size = %s mm" %step_size)
 		true_tract_res = resample_tractogram(true_tract, step_size=step_size)
 		true_tract = true_tract_res
 		DSC, wDSC, J, sensitivity, vol_A, vol_B = compute_voxel_measures(estimated_tract, true_tract, affine)
