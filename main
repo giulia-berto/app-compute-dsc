@@ -30,7 +30,7 @@ else
 fi
 segmentation1=`jq -r '.segmentation1' config.json`
 segmentation2=`jq -r '.segmentation2' config.json`
-if [ $segmentation1 == $segmentation2]; then
+if [ $segmentation1 == $segmentation2 ]; then
 	echo "Estimated segmentation and ground truth segmentation are the same. DSC will be 1."
 	exit 1
 fi
