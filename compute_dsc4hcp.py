@@ -10,15 +10,28 @@ import os.path
 import nibabel as nib
 import numpy as np
 import dipy
+import json
 from nibabel.streamlines import load
 from dipy.tracking.vox2track import streamline_mapping
+from dipy.tracking.streamline import set_number_of_points
+from dipy.tracking.utils import length
 
 
-def compute_voxel_measures(estimated_tract, true_tract):
+def resample_tractogram(tractogram, step_size):
+    """Resample the tractogram with the given step size.
+    """
+    lengths=list(length(tractogram))
+    tractogram_res = []
+    for i, f in enumerate(tractogram):
+	nb_res_points = np.int(np.floor(lengths[i]/step_size))
+	tmp = set_number_of_points(f, nb_res_points)
+	tractogram_res.append(tmp)
+    return tractogram_res
 
-    #affine_true=affine_for_trackvis([1.25, 1.25, 1.25])
-    aff=np.array([[-1.25, 0, 0, 90],[0, 1.25, 0, -126],[0, 0, 1.25, -72],[0, 0, 0, 1]])
 
+def compute_voxel_measures(estimated_tract, true_tract, aff):
+
+    #aff=np.array([[-1.25, 0, 0, 90],[0, 1.25, 0, -126],[0, 0, 1.25, -72],[0, 0, 0, 1]])
     voxel_list_estimated_tract = streamline_mapping(estimated_tract, affine=aff).keys()
     voxel_list_true_tract = streamline_mapping(true_tract, affine=aff).keys()
 
@@ -80,6 +93,10 @@ if __name__ == '__main__':
 		content = f.read().splitlines()
 
 	results_matrix = np.zeros((len(content), 6))
+
+	with open('config.json') as fid:
+            data = json.load(fid)
+	    step_size = data["step_size"]
 	
         for t, tract_name in enumerate(content):
 		estimated_tract_filename = '%s_tract_%s.trk' %(tract_name, args.run)
@@ -87,8 +104,11 @@ if __name__ == '__main__':
 		estimated_tract = estimated_tract.streamlines
 		true_tract_filename = '%s_tract.trk' %(tract_name)
 		true_tract = nib.streamlines.load(true_tract_filename)
+		affine = true_tract.affine
 		true_tract = true_tract.streamlines
-		DSC, wDSC, J, sensitivity, vol_A, vol_B = compute_voxel_measures(estimated_tract, true_tract)
+		true_tract_res = resample_tractogram(true_tract, step_size=step_size)
+		true_tract = true_tract_res
+		DSC, wDSC, J, sensitivity, vol_A, vol_B = compute_voxel_measures(estimated_tract, true_tract, affine)
 		print("The DSC of the tract %s is %s" %(tract_name, DSC))
 		results_matrix[t] = [DSC, wDSC, J, sensitivity, vol_A, vol_B] 
 		with open(results, "a") as myfile:
