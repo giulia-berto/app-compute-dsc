@@ -8,8 +8,6 @@ module unload matlab
 module load matlab/2017a
 module unload python
 module load dipy/dev
-module load nodejs
-echo "Finished loading modules"
 
 echo "Check the inputs subject id"
 afq_sub1_id=`jq -r '._inputs[0].meta.subject' config.json`
