@@ -6,6 +6,7 @@ import sys
 import argparse
 import nibabel as nib
 import numpy as np
+import csv
 from dipy.tracking.vox2track import streamline_mapping
 
 
