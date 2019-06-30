@@ -94,5 +94,5 @@ if __name__ == '__main__':
 			writer = csv.writer(csvFile)
 			writer.writerow(np.float16(results_matrix[t]))
 	
-	np.save('%s_results' %args.sub, results_matrix)
+	np.save('sub-%s_results' %args.sub, results_matrix)
 	sys.exit()    

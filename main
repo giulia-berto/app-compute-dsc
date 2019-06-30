@@ -54,4 +54,7 @@ fi
 echo "Computing voxel measures"
 python evaluation.py -sub $tck_id -dir_est tracts_est -dir_true tracts_true
 
+mkdir csv
+cp sub-${tck_id}_results.csv csv/output_FiberStats.csv
+
 echo "Complete"
