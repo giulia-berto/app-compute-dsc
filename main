@@ -30,12 +30,9 @@ fi
 if [[ $seg_est == *.mat ]]; then
 	echo "Estimated tracts given as wmc"
 	./run_wmc-wmc.sh
-elif [[ $seg_est == *masks ]]; then
+else 
 	echo "Estimated tracts given as masks"
 	./run_mask-wmc.sh
-elif [[ $seg_est == *.trk ]]; then
-	echo "Estimated tract given as trk file"
-	./run_trk-wmc.sh
 fi
 
 mkdir csv
