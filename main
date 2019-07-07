@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -k o
-#PBS -l nodes=1:ppn=4,walltime=0:30:00
+#PBS -l nodes=1:ppn=4,walltime=00:30:00
 
 export PYTHONPATH=/N/u/brlife/git/nibabel:$PYTHONPATH
 
@@ -27,32 +27,16 @@ if [ $seg_est == $seg_true ]; then
 	exit 1
 fi
 
-echo "tck conversion to trk"
-tractogram=`jq -r '.tractogram' config.json`
-t1=`jq -r '.t1' config.json`
-cp $tractogram ${tck_id}_tractogram.tck
-python tck2trk.py $t1 ${tck_id}_tractogram.tck -f;
-
-echo "wmc conversion to trk"
-mkdir tracts_est
-python wmc2trk.py -tractogram ${tck_id}_tractogram.trk -classification $seg_est -out_dir tracts_est
-
-if [ -z "$(ls -A -- "tracts_est")" ]; then
-	echo "wmc to trk conversion failed"
-	exit 1
+if [[ $seg_est == *.mat ]]; then
+	echo "Estimated tracts given as wmc"
+	./run_wmc-wmc.sh
+elif [[ $seg_est == *masks ]]; then
+	echo "Estimated tracts given as masks"
+	./run_mask-wmc.sh
+elif [[ $seg_est == *.trk ]]; then
+	echo "Estimated tract given as trk file"
+	./run_trk-wmc.sh
 fi
-
-mkdir tracts_true
-rm tract_name_list.txt
-python wmc2trk.py -tractogram ${tck_id}_tractogram.trk -classification $seg_true -out_dir tracts_true
-
-if [ -z "$(ls -A -- "tracts_true")" ]; then
-	echo "wmc to trk conversion failed"
-	exit 1
-fi
-
-echo "Computing voxel measures"
-python evaluation.py -sub $tck_id -dir_est tracts_est -dir_true tracts_true
 
 mkdir csv
 cp sub-${tck_id}_results.csv csv/output_FiberStats.csv
