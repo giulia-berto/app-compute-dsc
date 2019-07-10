@@ -20,13 +20,7 @@ if [ -z "$(ls -A -- "tracts_est")" ]; then
 fi
 
 mkdir tracts_true
-rm tract_name_list.txt
-python wmc2trk.py -tractogram ${tck_id}_tractogram.trk -classification $seg_true -out_dir tracts_true
-
-if [ -z "$(ls -A -- "tracts_true")" ]; then
-	echo "wmc to trk conversion failed"
-	exit 1
-fi
+cp $seg_true tracts_true
 
 echo "Computing voxel measures"
 python evaluation.py -sub $tck_id -dir_est tracts_est -dir_true tracts_true
