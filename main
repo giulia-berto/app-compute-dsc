@@ -41,4 +41,9 @@ fi
 mkdir csv
 cp sub-${tck_id}_results.csv csv/output_FiberStats.csv
 
-echo "Complete"
+if [ -z "$(ls -A -- "csv")" ]; then    
+	echo "Computation failed."; 
+	exit 1;
+else    
+	echo "Computation done." 
+fi
