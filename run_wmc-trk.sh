@@ -20,7 +20,9 @@ if [ -z "$(ls -A -- "tracts_est")" ]; then
 fi
 
 mkdir tracts_true
-cp $seg_true tracts_true
+while read tract_name; do
+	cp $seg_true tracts_true/${tract_name}_tract.trk
+done < tract_name_list.txt
 
 echo "Computing voxel measures"
 python evaluation.py -sub $tck_id -dir_est tracts_est -dir_true tracts_true
