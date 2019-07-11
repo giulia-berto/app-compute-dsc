@@ -19,18 +19,10 @@ if [ -z "$(ls -A -- "tracts_est")" ]; then
 	exit 1
 fi
 
-# Building arrays
-arr_seg_true=()
-arr_seg_true+=(${seg_true})
-num_tracts=$((${#arr_seg_true[@]} - 2))
-
 mkdir tracts_true
-for i in `seq 1 $num_tracts`; do
-	tract_name=$(jq -r "._inputs[1+$i].tags[0]" config.json | tr -d "_")
-	echo $tract_name
-	echo $num_tracts
-	cp ${arr_seg_true[i]//[,\"]} tracts_true/${tract_name}_tract.trk
-done
+while read tract_name; do
+	cp $seg_true tracts_true/${tract_name}_tract.trk
+done < tract_name_list.txt
 
 echo "Computing voxel measures"
 python evaluation.py -sub $tck_id -dir_est tracts_est -dir_true tracts_true
