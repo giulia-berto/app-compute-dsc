@@ -25,8 +25,10 @@ arr_seg_true+=(${seg_true})
 num_tracts=$((${#arr_seg_true[@]} - 2))
 
 mkdir tracts_true
-for i in `seq 1 $num_ex`; do
+for i in `seq 1 $num_tracts`; do
 	tract_name=$(jq -r "._inputs[1+$i].tags[0]" config.json | tr -d "_")
+	echo $tract_name
+	echo $num_tracts
 	cp ${arr_seg_true[i]//[,\"]} tracts_true/${tract_name}_tract.trk
 done
 
