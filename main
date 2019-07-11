@@ -32,7 +32,7 @@ if [[ $seg_est == *.mat ]]; then
 		echo "Estimated and ground truth tracts given as wmc"
 		./run_wmc-wmc.sh
 	elif [[ $seg_true == *.trk ]]; then
-		echo "Estimated tracts given as wmc and round truth tract given as .trk"
+		echo "Estimated tracts given as wmc and ground truth tract given as .trk"
 		./run_wmc-trk.sh
 	fi	
 elif  [[ $seg_est == masks ]]; then
