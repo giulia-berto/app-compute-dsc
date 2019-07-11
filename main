@@ -41,6 +41,7 @@ elif  [[ $seg_est == masks ]]; then
 		./run_mask-wmc.sh
 	elif [[ $seg_true == masks ]]; then
 		echo "Estimated and ground truth tracts given as masks"
+	fi
 fi
 
 mkdir csv
