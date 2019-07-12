@@ -9,11 +9,11 @@ unset PYTHONPATH
 export PATH=/N/u/gberto/Karst/miniconda2/bin:$PATH 
 
 echo "Check the inputs subject id"
-tck_id=`jq -r '._inputs[0].meta.subject' config.json`
+subjID=`jq -r '._inputs[0].meta.subject' config.json`
 wmc_est_id=`jq -r '._inputs[1].meta.subject' config.json`
 wmc_true_id=`jq -r '._inputs[2].meta.subject' config.json`
 run=`jq -r '.run' config.json`
-if [ $wmc_est_id == $tck_id -a $wmc_true_id == $tck_id ]; then
+if [ $wmc_est_id == $subjID -a $wmc_true_id == $subjID ]; then
 	echo "Inputs subject IDs correctly inserted"
 else
 	echo "Inputs subject IDs incorrectly inserted. Check them again."
@@ -41,11 +41,13 @@ elif  [[ $seg_est == masks ]]; then
 		./run_mask-wmc.sh
 	elif [[ $seg_true == masks ]]; then
 		echo "Estimated and ground truth tracts given as masks"
+		echo "Computing voxel measures"
+		python evaluation_mask-mask.py -sub $subjID -dir_est $seg_est -dir_true $seg_true
 	fi
 fi
 
 mkdir csv
-cp sub-${tck_id}_results.csv csv/output_FiberStats.csv
+cp sub-${subjID}_results.csv csv/output_FiberStats.csv
 
 if [ -z "$(ls -A -- "csv")" ]; then    
 	echo "Computation failed."; 
