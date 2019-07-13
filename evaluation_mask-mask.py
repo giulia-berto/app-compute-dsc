@@ -59,9 +59,9 @@ if __name__ == '__main__':
 		writer = csv.writer(csvFile)
 		writer.writerow(metrics)
 
-    with open('config.json') as f:
-    	data = json.load(f)
-    tract_name_list = eval(data["tract_name_list"])
+	with open('config.json') as f:
+		data = json.load(f)
+	tract_name_list = eval(data["tract_name_list"])
 
 	results_matrix = np.zeros((len(tract_name_list), len(metrics)))
 	
