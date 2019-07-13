@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
 	with open('config.json') as f:
 		data = json.load(f)
-	tract_name_list = eval(data["tract_name_list"])
+	tract_name_list = tract_name_list = data["tract_name_list"].encode('utf-8').split(', ')
 	print(tract_name_list)
 	results_matrix = np.zeros((len(tract_name_list), len(metrics)))
 	
