@@ -30,12 +30,12 @@ def compute_dsc_mask_mask(mask, gt_mask):
     TP = len(voxel_set_estimated_tract.intersection(voxel_set_gt))
     vol_A = len(voxel_set_estimated_tract)
     vol_B = len(voxel_list_gt)
-	FP = vol_B-TP
+    FP = vol_B-TP
     FN = vol_A-TP
     sensitivity = float(TP) / float(TP + FN)
     DSC = 2.0 * float(TP) / float(vol_A + vol_B)
     wDSC = 0 #not possible to compute
-	J = float(TP) / float(TP + FN + FP)
+    J = float(TP) / float(TP + FN + FP)
     
     return DSC, wDSC, J, sensitivity, TP, FP, FN
 
