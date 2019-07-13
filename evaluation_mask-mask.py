@@ -63,11 +63,12 @@ if __name__ == '__main__':
 	with open('config.json') as f:
 		data = json.load(f)
 	tract_name_list = eval(data["tract_name_list"])
-
+	print(tract_name_list)
 	results_matrix = np.zeros((len(tract_name_list), len(metrics)))
 	
 	for t, tract_name in enumerate(tract_name_list):
 		estimated_mask_filename = '%s/%s.nii.gz' %(args.dir_est, tract_name)
+		print(estimated_mask_filename)
 		estimated_mask = nib.load(estimated_mask_filename)
 		gt_mask_filename = '%s/%s.nii.gz' %(args.dir_true, tract_name)
 		gt_mask = nib.load(gt_mask_filename)
