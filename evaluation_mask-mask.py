@@ -68,7 +68,6 @@ if __name__ == '__main__':
 	
 	for t, tract_name in enumerate(tract_name_list):
 		estimated_mask_filename = '%s/%s.nii.gz' %(args.dir_est, tract_name)
-		print(estimated_mask_filename)
 		estimated_mask = nib.load(estimated_mask_filename)
 		gt_mask_filename = '%s/%s.nii.gz' %(args.dir_true, tract_name)
 		gt_mask = nib.load(gt_mask_filename)
