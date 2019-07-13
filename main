@@ -17,7 +17,7 @@ if [ $seg_est == $seg_true ]; then
 fi
 
 
-if [[ $seg_true == masks ]]; then
+if [[ $seg_true == *masks ]]; then
 
 	if [ `jq -r '._inputs[1].meta.subject' config.json` == $subjID ]; then
 		echo "Inputs subject IDs correctly inserted"
@@ -50,7 +50,7 @@ else
 			echo "Estimated tracts given as wmc and ground truth tract given as .trk"
 			./run_wmc-trk.sh
 		fi
-	elif  [[ $seg_est == masks ]]; then
+	elif  [[ $seg_est == *masks ]]; then
 		echo "Estimated tracts given as masks and ground truth tracts given as wmc"
 		./run_mask-wmc.sh
 	fi
