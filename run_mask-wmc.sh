@@ -8,12 +8,12 @@ t1=`jq -r '.t1' config.json`
 
 echo "tck conversion to trk"
 cp $tractogram ${tck_id}_tractogram.tck
-python tck2trk.py $t1 ${tck_id}_tractogram.tck -f;
+singularity exec -e docker://brainlife/dipy:0.16.0 python tck2trk.py $t1 ${tck_id}_tractogram.tck -f;
 
 echo "wmc conversion to trk"
 mkdir tracts_true
 rm tract_name_list.txt
-python wmc2trk.py -tractogram ${tck_id}_tractogram.trk -classification $seg_true -out_dir tracts_true
+singularity exec -e docker://brainlife/dipy:0.16.0 python wmc2trk.py -tractogram ${tck_id}_tractogram.trk -classification $seg_true -out_dir tracts_true
 
 if [ -z "$(ls -A -- "tracts_true")" ]; then
 	echo "wmc to trk conversion failed"
@@ -21,4 +21,4 @@ if [ -z "$(ls -A -- "tracts_true")" ]; then
 fi
 
 echo "Computing voxel measures"
-python evaluation_mask-wmc.py -sub $tck_id -dir_est $seg_est -dir_true tracts_true
+singularity exec -e docker://brainlife/dipy:0.16.0 python evaluation_mask-wmc.py -sub $tck_id -dir_est $seg_est -dir_true tracts_true
