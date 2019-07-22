@@ -2,8 +2,11 @@
 #PBS -k o
 #PBS -l nodes=1:ppn=4,walltime=00:30:00
 
-set -e
-set -x
+export PYTHONPATH=/N/u/brlife/git/nibabel:$PYTHONPATH
+
+echo "setting miniconda path..."
+unset PYTHONPATH
+export PATH=/N/u/gberto/Karst/miniconda2/bin:$PATH 
 
 subjID=`jq -r '._inputs[0].meta.subject' config.json`
 seg_est=`jq -r '.seg_est' config.json`
@@ -24,7 +27,7 @@ if [[ $seg_true == *masks ]]; then
 	fi
 	echo "Estimated and ground truth tracts given as masks"
 	echo "Computing voxel measures"
-	singularity exec -e docker://brainlife/dipy:0.16.0 python evaluation_mask-mask.py -sub $subjID -dir_est $seg_est -dir_true $seg_true
+	python evaluation_mask-mask.py -sub $subjID -dir_est $seg_est -dir_true $seg_true
 
 else 
 	
