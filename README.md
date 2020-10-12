@@ -36,9 +36,12 @@ We kindly ask that you cite the following articles when publishing papers and co
 
 ### On Brainlife.io
 Depending on the kind of input data, there are three different Apps that you can run:
-* DSC evaluation (wmc - wmc) 
-* DSC evaluation (wmc - trk)
-* DSC evaluation (mask - mask)
+* DSC evaluation (wmc - wmc) [https://doi.org/10.25663/bl.app.57](https://doi.org/10.25663/bl.app.57)
+* DSC evaluation (wmc - trk) [https://doi.org/10.25663/bl.app.211](https://doi.org/10.25663/bl.app.211)
+* DSC evaluation (mask - mask) [https://doi.org/10.25663/bl.app.212](https://doi.org/10.25663/bl.app.212)
 
-You can submit this App online at [https://doi.org/10.25663/bl.app.1](https://doi.org/10.25663/bl.app.1) via the "Execute" tab.
+You can submit the Apps online at the links above via the "Execute" tab.
+
+(to do)
+in the first two cases, first from stremline to mask. you should provide an index (1-20) afq, or 1-78 if WMA. In the last case, all bundles found in the folder. Idea: make only the mask to mask version public!!
 
