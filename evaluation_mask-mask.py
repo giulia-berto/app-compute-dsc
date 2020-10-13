@@ -55,14 +55,13 @@ if __name__ == '__main__':
 
 	#Write results on a file
 	results = 'sub-%s_results.csv' %args.sub
-	metrics = ['DSC', 'wDSC', 'J', 'sens', 'TP', 'FP', 'FN']
+	metrics = ['tract_name', 'DSC', 'wDSC', 'J', 'sens', 'TP', 'FP', 'FN']
 	with open(results, 'a') as csvFile:
 		writer = csv.writer(csvFile)
 		writer.writerow(metrics)
 
-	with open('config.json') as f:
-		data = json.load(f)
-	tract_name_list = tract_name_list = data["tract_name_list"].encode('utf-8').split(', ')
+	with open('tract_name_list.txt') as f:
+		tract_name_list = f.read().splitlines()
 	print(tract_name_list)
 	results_matrix = np.zeros((len(tract_name_list), len(metrics)))
 	
@@ -76,7 +75,7 @@ if __name__ == '__main__':
 		results_matrix[t] = [DSC, wDSC, J, sensitivity, TP, FP, FN] 
 		with open(results, "a") as csvFile:
 			writer = csv.writer(csvFile)
-			writer.writerow(np.float16(results_matrix[t]))
+			writer.writerow(tract_name, np.float16(results_matrix[t]))
 	
 	np.save('sub-%s_results' %args.sub, results_matrix)
 	sys.exit()    
