@@ -36,14 +36,16 @@ We kindly ask that you cite the following articles when publishing papers and co
 You can submit this App online at https://doi.org/10.25663/brainlife.app.212 via the “Execute” tab.
 
 Inputs: \
-The two inputs are (i) the estimated masks and (ii) the ground truth masks. WARNING: be sure that the two inputs contain the exact same bundles and are in the same anatomical space.
+The two inputs are (i) a collection of estimated masks and (ii) a collection of ground truth masks. WARNING: be sure that the two collections contain the exact same bundles, and that are in the same anatomical space.
 
 Output: \
 Along with the DSC score, other 5 common scores are returned, specifically: \
 * [Dice Similarity Coefficient](https://www.jstor.org/stable/1932409) (DSC) (Dice et al., 1945) 
 * [weighted Dice Similarity Coefficient](https://doi.org/10.1016/j.nicl.2017.07.020) (wDSC) (Cousineau et al., 2017) 
-* Jaccard index (J) https://en.wikipedia.org/wiki/Jaccard_index
-* sensitivity https://en.wikipedia.org/wiki/Sensitivity_and_specificity
-* True Positives (TP) https://en.wikipedia.org/wiki/False_positives_and_false_negatives
-* False Positives (FP) https://en.wikipedia.org/wiki/False_positives_and_false_negatives
-* False Negatives (FN) https://en.wikipedia.org/wiki/False_positives_and_false_negatives
+* [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index) (J) 
+* [sensitivity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity)
+* [True Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (TP) 
+* [False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (FP)
+* [False Negatives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (FN)
+
+The output is a table in .csv format, in which on the columns there are the different scores, and on the rows the different bundles contained in the collections.
