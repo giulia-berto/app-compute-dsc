@@ -1,5 +1,5 @@
 """Compute the following voxel measures:
-DSC, wDSC, J, sensitivity, TP, FP, FN.
+DSC, J, sensitivity, TP, FP, FN.
 """
 
 import sys
@@ -35,10 +35,9 @@ def compute_dsc_mask_mask(mask, gt_mask):
     FN = vol_A-TP
     sensitivity = float(TP) / float(TP + FN)
     DSC = 2.0 * float(TP) / float(vol_A + vol_B)
-    wDSC = 0 #not possible to compute
     J = float(TP) / float(TP + FN + FP)
     
-    return DSC, wDSC, J, sensitivity, TP, FP, FN
+    return DSC, J, sensitivity, TP, FP, FN
 
 
 
@@ -55,7 +54,7 @@ if __name__ == '__main__':
 
 	#Write results on a file
 	results = 'sub-%s_results.csv' %args.sub
-	metrics = ['DSC', 'wDSC', 'J', 'sens', 'TP', 'FP', 'FN']
+	metrics = ['DSC', 'J', 'sens', 'TP', 'FP', 'FN']
 	first_row = ['tract_name']
 	first_row[1:len(metrics)] = metrics
 	with open(results, 'a') as csvFile:
@@ -72,9 +71,9 @@ if __name__ == '__main__':
 		estimated_mask = nib.load(estimated_mask_filename)
 		gt_mask_filename = '%s/%s.nii.gz' %(args.dir_true, tract_name)
 		gt_mask = nib.load(gt_mask_filename)
-		DSC, wDSC, J, sensitivity, TP, FP, FN = compute_dsc_mask_mask(estimated_mask, gt_mask)
+		DSC, J, sensitivity, TP, FP, FN = compute_dsc_mask_mask(estimated_mask, gt_mask)
 		print("The DSC of the tract %s is %s" %(tract_name, DSC))
-		results_matrix[t] = [DSC, wDSC, J, sensitivity, TP, FP, FN] 
+		results_matrix[t] = [DSC, J, sensitivity, TP, FP, FN] 
 		row = [tract_name]
 		row[1:len(metrics)] = np.float16(results_matrix[t])
 		with open(results, 'a') as csvFile:
