@@ -25,7 +25,8 @@ if [[ $seg_true == *masks ]]; then
 	echo "Estimated and ground truth tracts given as masks"
 	ls ${seg_true}/masks > tract_name_list.txt #automatically create tract_name_list
 	sed -i '/json/d' tract_name_list.txt #remove json files if any
-	sed -e s/_Vol.nii.gz//g -i tract_name_list.txt #remove suffix _Vol.nii.gz
+	sed -e s/.nii.gz//g -i tract_name_list.txt #remove suffix .nii.gz
+	sed -e s/_Vol//g -i tract_name_list.txt #remove suffix _Vol if any
 	echo "Computing voxel measures"
 	singularity exec -e docker://brainlife/dipy:0.16.0 python evaluation_mask-mask.py -sub $subjID -dir_est $seg_est -dir_true $seg_true
 
