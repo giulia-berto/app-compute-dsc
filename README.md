@@ -47,8 +47,6 @@ Along with the DSC score, other 5 common scores are returned, specifically: \
 * [False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (FP)
 * [False Negatives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (FN)
 
-The output is a .csv file, in which on the columns there are the different scores, and on the rows the different bundles of the collections.
-
 ### Running Locally (on your machine)
 
 1. git clone this repo.
@@ -68,7 +66,7 @@ The output is a .csv file, in which on the columns there are the different score
 ```
 
 ### Output
-The main output of this App is a file called `output_FiberStats.csv`, which contains the 5 scores for each of the bundles of the collections.
+The main output of this App is a file called `output_FiberStats.csv`, in which on the columns there are the different scores, and on the rows the different bundles of the collections.
 
 ### Dependencies
 This App only requires [singularity](https://sylabs.io/singularity/) to run. 
