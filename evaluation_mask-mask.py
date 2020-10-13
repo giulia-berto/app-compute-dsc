@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
 	with open('tract_name_list.txt') as f:
 		tract_name_list = f.read().splitlines()
-	print(tract_name_list)
+	#print(tract_name_list)
 	results_matrix = np.zeros((len(tract_name_list), len(metrics)))
 	
 	for t, tract_name in enumerate(tract_name_list):
