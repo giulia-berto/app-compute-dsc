@@ -23,7 +23,7 @@ if [[ $seg_true == *masks ]]; then
 		exit 1
 	fi
 	echo "Estimated and ground truth tracts given as masks"
-	ls ${seg_true}/masks > tract_name_list.txt #automatically create tract_name_list
+	ls $seg_true > tract_name_list.txt #automatically create tract_name_list
 	sed -i '/json/d' tract_name_list.txt #remove json files if any
 	sed -e s/.nii.gz//g -i tract_name_list.txt #remove suffix .nii.gz
 	sed -e s/_Vol//g -i tract_name_list.txt #remove suffix _Vol if any
