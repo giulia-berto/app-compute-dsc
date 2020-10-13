@@ -39,9 +39,8 @@ Inputs: \
 The two inputs are (i) a collection of estimated masks and (ii) a collection of ground truth masks. If you have bundles in WMC format, you can convert them in the correct datatype by using this App: https://doi.org/10.25663/brainlife.app.142. WARNING: be sure that the two collections contain the exact same bundles, and that are in the same anatomical space.
 
 Output: \
-Along with the DSC score, other 6 common scores are returned, specifically: \
-* [Dice Similarity Coefficient](https://www.jstor.org/stable/1932409) (DSC) (Dice et al., 1945) 
-* [weighted Dice Similarity Coefficient](https://doi.org/10.1016/j.nicl.2017.07.020) (wDSC) (Cousineau et al., 2017) 
+Along with the DSC score, other 5 common scores are returned, specifically: \
+* [Dice Similarity Coefficient](https://www.jstor.org/stable/1932409) (DSC) (Dice et al., 1945)  
 * [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index) (J) 
 * [sensitivity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity)
 * [True Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (TP) 
@@ -57,12 +56,8 @@ The output is a .csv file, in which on the columns there are the different score
 
 ```json
 {
-        "track": "./input/track/track.tck",
-	"dwi": "./input/dtiinit/dwi_aligned_trilin_noMEC.nii.gz",
-	"bvecs": "./input/dtiinit/dwi_aligned_trilin_noMEC.nii.bvecs",
-	"bvals": "./input/dtiinit/dwi_aligned_trilin_noMEC.nii.bvals",
-        "life_discretization": 360,
-        "num_iterations": 100
+        "seg_est": "./input/estimated_tracts/masks",
+	"seg_true": "./input/true_tracts/masks"
 }
 ```
 
@@ -71,3 +66,11 @@ The output is a .csv file, in which on the columns there are the different score
 ```bash
 ./main
 ```
+
+### Output
+The main output of this App is a file called `output_FiberStats.csv`, which contains the 5 scores for each of the bundles of the collections.
+
+### Dependencies
+This App only requires [singularity](https://sylabs.io/singularity/) to run. 
+
+#### MIT Copyright (c) 2020 Bruno Kessler Foundation (FBK)
