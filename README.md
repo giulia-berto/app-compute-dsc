@@ -1,14 +1,13 @@
 [![Abcdspec-compliant](https://img.shields.io/badge/ABCD_Spec-v1.1-green.svg)](https://github.com/brain-life/abcd-spec)
-[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.346-blue.svg)](https://doi.org/10.25663/brainlife.app.57)
-[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.346-blue.svg)](https://doi.org/10.25663/brainlife.app.211)
-[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.346-blue.svg)](https://doi.org/10.25663/brainlife.app.212)
+[![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.212-blue.svg)](https://doi.org/10.25663/brainlife.app.212)
 
 # app-compute-dsc
-This App was designed to compute the degree of overlap, at the voxel level, between an estimated bundle and a ground truth bundle. A standard score to measure such degree of overlap is the Dice Similarity Coefficient (DSC) score (Dice et al, 1945). If the bundles are given in form of streamlines, first, the corresponding voxel masks are retrieved, and then the DSC is computed by counting the number of voxels in common and the total number of voxels, as follows:
+This App was designed to compute the degree of overlap between two bundle masks using the Dice Similarity Coefficient (DSC) score (Dice et al., 1945). The DSC is a standard score to evaluate the result of bundle segmentation, being the two bundle masks (i) the estimated mask and (ii) the ground truth mask (see for example Garyfallidis et al., 2017, Wasserthal et al., 2018, Bertò et al., 2020).  
+Given two bundles b̂ and b, the DSC is computed by counting the number of voxels in common and the total number of voxels, as follows:
 
 <img src="https://latex.codecogs.com/gif.latex?DSC=2\cdot(|v(\hat{b})\cap&space;v(b)|)/(|v(\hat{b})|&plus;|v(b)|)" title="DSC=2\cdot(|v(\hat{b})\cap v(b)|)/(|v(\hat{b})|+|v(b)|)" />
 
-where b̂ and b are the two bundles and |v()| is the number of voxels of the voxel mask. The DSC ranges from 0 to 1 and the closer the score is to 1, the more the two bundles are similar.
+where |v()| is the number of voxels of the bundle mask. The DSC ranges from 0 to 1 and the closer the score is to 1, the more the two bundles are similar.
 
 ### Authors
 - [Giulia Bertò](giulia.berto.4@gmail.com)
@@ -32,16 +31,19 @@ We kindly ask that you cite the following articles when publishing papers and co
 
 2. Avesani, P., McPherson, B., Hayashi, S. et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [https://doi.org/10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
 
-## Running the App 
+### Running the App
+### On [Brainlife.io](http://brainlife.io/) 
+You can submit this App online at https://doi.org/10.25663/brainlife.app.212 via the “Execute” tab.
 
-### On Brainlife.io
-Depending on the kind of input data, there are three different Apps that you can run:
-* DSC evaluation (wmc - wmc) [https://doi.org/10.25663/bl.app.57](https://doi.org/10.25663/bl.app.57)
-* DSC evaluation (wmc - trk) [https://doi.org/10.25663/bl.app.211](https://doi.org/10.25663/bl.app.211)
-* DSC evaluation (mask - mask) [https://doi.org/10.25663/bl.app.212](https://doi.org/10.25663/bl.app.212)
+Inputs: \
+The two inputs are (i) the estimated masks and (ii) the ground truth masks. WARNING: be sure that the two inputs contain the exact same bundles and are in the same anatomical space.
 
-You can submit the Apps online at the links above via the "Execute" tab.
-
-(to do)
-in the first two cases, first from stremline to mask. you should provide an index (1-20) afq, or 1-78 if WMA. In the last case, all bundles found in the folder. Idea: make only the mask to mask version public!!
-
+Output: \
+Along with the DSC score, other 5 common scores are returned, specifically: \
+* [Dice Similarity Coefficient](https://www.jstor.org/stable/1932409) (DSC) (Dice et al., 1945) 
+* [weighted Dice Similarity Coefficient](https://doi.org/10.1016/j.nicl.2017.07.020) (wDSC) (Cousineau et al., 2017) 
+* Jaccard index (J) https://en.wikipedia.org/wiki/Jaccard_index
+* sensitivity https://en.wikipedia.org/wiki/Sensitivity_and_specificity
+* True Positives (TP) https://en.wikipedia.org/wiki/False_positives_and_false_negatives
+* False Positives (FP) https://en.wikipedia.org/wiki/False_positives_and_false_negatives
+* False Negatives (FN) https://en.wikipedia.org/wiki/False_positives_and_false_negatives
