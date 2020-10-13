@@ -55,10 +55,10 @@ if __name__ == '__main__':
 
 	#Write results on a file
 	results = 'sub-%s_results.csv' %args.sub
-	metrics = ['tract_name', 'DSC', 'wDSC', 'J', 'sens', 'TP', 'FP', 'FN']
+	metrics = ['DSC', 'wDSC', 'J', 'sens', 'TP', 'FP', 'FN']
 	with open(results, 'a') as csvFile:
 		writer = csv.writer(csvFile)
-		writer.writerow(metrics)
+		writer.writerow('tract_name', metrics)
 
 	with open('tract_name_list.txt') as f:
 		tract_name_list = f.read().splitlines()
