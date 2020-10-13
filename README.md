@@ -39,10 +39,10 @@ Inputs: \
 The two inputs are (i) a collection of estimated masks and (ii) a collection of ground truth masks. If you have bundles in WMC format, you can convert them in the correct datatype by using this App: https://doi.org/10.25663/brainlife.app.142. WARNING: be sure that the two collections contain the exact same bundles, and that are in the same anatomical space.
 
 Output: \
-Along with the DSC score, other 5 common scores are returned, specifically: \
+Along with the DSC score, other 5 common scores are returned, specifically: 
 * [Dice Similarity Coefficient](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient) (DSC) 
 * [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index) (J) 
-* [sensitivity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity)
+* [sensitivity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity) (sens)
 * [True Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (TP) 
 * [False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (FP)
 * [False Negatives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (FN)
