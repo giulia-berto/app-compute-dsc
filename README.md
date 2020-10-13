@@ -3,7 +3,7 @@
 
 # app-compute-dsc
 This App was designed to compute the degree of overlap between two bundle masks using the Dice Similarity Coefficient (DSC) score (Dice et al., 1945). The DSC is a standard score to evaluate the result of bundle segmentation, being the two bundle masks (i) the estimated mask and (ii) the ground truth mask (see for example Garyfallidis et al., 2017, Wasserthal et al., 2018, Bertò et al., 2020).  
-Given two bundles b̂ and b, the DSC is computed by counting the number of voxels in common and the total number of voxels, as follows:
+Given two bundles b̂ and b, the DSC is proportional to the number of common voxels over the total number of voxels, as follows:
 
 <img src="https://latex.codecogs.com/gif.latex?DSC=2\cdot(|v(\hat{b})\cap&space;v(b)|)/(|v(\hat{b})|&plus;|v(b)|)" title="DSC=2\cdot(|v(\hat{b})\cap v(b)|)/(|v(\hat{b})|+|v(b)|)" />
 
@@ -36,10 +36,10 @@ We kindly ask that you cite the following articles when publishing papers and co
 You can submit this App online at https://doi.org/10.25663/brainlife.app.212 via the “Execute” tab.
 
 Inputs: \
-The two inputs are (i) a collection of estimated masks and (ii) a collection of ground truth masks. WARNING: be sure that the two collections contain the exact same bundles, and that are in the same anatomical space.
+The two inputs are (i) a collection of estimated masks and (ii) a collection of ground truth masks. If you have bundles in WMC format, you can convert them in the correct datatype by using this App: https://doi.org/10.25663/brainlife.app.142. WARNING: be sure that the two collections contain the exact same bundles, and that are in the same anatomical space.
 
 Output: \
-Along with the DSC score, other 5 common scores are returned, specifically: \
+Along with the DSC score, other 6 common scores are returned, specifically: \
 * [Dice Similarity Coefficient](https://www.jstor.org/stable/1932409) (DSC) (Dice et al., 1945) 
 * [weighted Dice Similarity Coefficient](https://doi.org/10.1016/j.nicl.2017.07.020) (wDSC) (Cousineau et al., 2017) 
 * [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index) (J) 
@@ -48,4 +48,26 @@ Along with the DSC score, other 5 common scores are returned, specifically: \
 * [False Positives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (FP)
 * [False Negatives](https://en.wikipedia.org/wiki/False_positives_and_false_negatives) (FN)
 
-The output is a table in .csv format, in which on the columns there are the different scores, and on the rows the different bundles contained in the collections.
+The output is a .csv file, in which on the columns there are the different scores, and on the rows the different bundles of the collections.
+
+### Running Locally (on your machine)
+
+1. git clone this repo.
+2. Inside the cloned directory, create `config.json` with something like the following content with paths to your input files.
+
+```json
+{
+        "track": "./input/track/track.tck",
+	"dwi": "./input/dtiinit/dwi_aligned_trilin_noMEC.nii.gz",
+	"bvecs": "./input/dtiinit/dwi_aligned_trilin_noMEC.nii.bvecs",
+	"bvals": "./input/dtiinit/dwi_aligned_trilin_noMEC.nii.bvals",
+        "life_discretization": 360,
+        "num_iterations": 100
+}
+```
+
+3. Launch the App by executing `main`
+
+```bash
+./main
+```
