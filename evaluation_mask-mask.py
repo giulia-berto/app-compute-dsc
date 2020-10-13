@@ -75,7 +75,7 @@ if __name__ == '__main__':
 		DSC, wDSC, J, sensitivity, TP, FP, FN = compute_dsc_mask_mask(estimated_mask, gt_mask)
 		print("The DSC of the tract %s is %s" %(tract_name, DSC))
 		results_matrix[t] = [DSC, wDSC, J, sensitivity, TP, FP, FN] 
-		row = tract_name[t]
+		row = [tract_name[t]]
 		row[1:len(metrics)] = np.float16(results_matrix[t])
 		with open(results, 'a') as csvFile:
 			writer = csv.writer(csvFile)
